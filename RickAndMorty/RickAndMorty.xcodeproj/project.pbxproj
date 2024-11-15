@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,7 @@
 		7A5B0DC22CE7C498008588F0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A5B0DC12CE7C498008588F0 /* Item.swift */; };
 		7A5B0DC42CE7C499008588F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A5B0DC32CE7C499008588F0 /* Assets.xcassets */; };
 		7A5B0DC72CE7C499008588F0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A5B0DC62CE7C499008588F0 /* Preview Assets.xcassets */; };
+		7A5B0DCF2CE7C7D3008588F0 /* CommonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7A5B0DCE2CE7C7D3008588F0 /* CommonUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A5B0DCF2CE7C7D3008588F0 /* CommonUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +88,9 @@
 			dependencies = (
 			);
 			name = RickAndMorty;
+			packageProductDependencies = (
+				7A5B0DCE2CE7C7D3008588F0 /* CommonUI */,
+			);
 			productName = RickAndMorty;
 			productReference = 7A5B0DBA2CE7C498008588F0 /* RickAndMorty.app */;
 			productType = "com.apple.product-type.application";
@@ -114,6 +119,9 @@
 				Base,
 			);
 			mainGroup = 7A5B0DB12CE7C498008588F0;
+			packageReferences = (
+				7A5B0DCD2CE7C7D3008588F0 /* XCLocalSwiftPackageReference "CommonUI" */,
+			);
 			productRefGroup = 7A5B0DBB2CE7C498008588F0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -348,6 +356,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		7A5B0DCD2CE7C7D3008588F0 /* XCLocalSwiftPackageReference "CommonUI" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = CommonUI;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7A5B0DCE2CE7C7D3008588F0 /* CommonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CommonUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7A5B0DB22CE7C498008588F0 /* Project object */;
 }
