@@ -2,9 +2,14 @@ import Foundation
 import Combine
 import UIKit
 import SwiftUI
+import CommonCore
+
+public typealias NetworkingClient = CharactersClient
 
 public final class CharactersCoordinator {
     private let navigationController: UINavigationController
+    private let networkingClient: NetworkingClient
+    
     private var cancellables = Set<AnyCancellable>()
     
     @Published private var state: State = .idle
@@ -15,8 +20,10 @@ public final class CharactersCoordinator {
         case detailView
     }
     
-    public init(navigationController: UINavigationController) {
+    public init(navigationController: UINavigationController,
+                networkingClient: NetworkingClient) {
         self.navigationController = navigationController
+        self.networkingClient = networkingClient
         self.setupBindings()
     }
     
@@ -45,7 +52,8 @@ public final class CharactersCoordinator {
     }
     
     private func pushMainView() {
-        let vm = CharactersMainViewModelMock()
+        let charactersService = RemoteCharactersService(client: networkingClient)
+        let vm = CharactersMainViewModelImplementation(charactersService: charactersService)
         let vc = UIHostingController(rootView: CharactersMainView(viewModel: vm))
         navigationController.pushViewController(vc, animated: true)
     }

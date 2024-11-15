@@ -14,7 +14,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         window?.rootViewController = navigationController
-        charactersCoordinator = CharactersCoordinator(navigationController: self.navigationController)
+        charactersCoordinator = CharactersCoordinator(navigationController: self.navigationController,
+                                                      networkingClient: NetworkingClientMock())
         window?.makeKeyAndVisible()
         charactersCoordinator?.start()
     }

@@ -1,4 +1,5 @@
 import SwiftUI
+import CommonCore
 
 struct CharactersMainView<ViewModel>: View where ViewModel: CharactersMainViewModel {
     @ObservedObject var viewModel: ViewModel
@@ -15,16 +16,4 @@ struct CharactersMainView<ViewModel>: View where ViewModel: CharactersMainViewMo
 
 #Preview {
     CharactersMainView(viewModel: CharactersMainViewModelMock())
-}
-
-protocol CharactersMainViewModel: ObservableObject {
-    var characters: [Character] { get }
-}
-
-final class CharactersMainViewModelMock: CharactersMainViewModel {
-    var characters: [Character] = [
-        Character(id: "1", name: "Rick", status: "Alive"),
-        Character(id: "1", name: "Rick", status: "Alive"),
-        Character(id: "1", name: "Rick", status: "Alive")
-    ]
 }

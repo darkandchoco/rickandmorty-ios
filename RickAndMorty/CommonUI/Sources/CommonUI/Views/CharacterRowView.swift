@@ -1,4 +1,5 @@
 import SwiftUI
+import CommonCore
 
 struct CharacterRowView: View {
     var character: Character
@@ -22,7 +23,5 @@ struct CharacterRowView: View {
 }
 
 #Preview {
-    CharacterRowView(character: Character(id: "1",
-                                          name: "Rick and Morty",
-                                          status: "Alive"))
+    CharacterRowView(character: Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender"))
 }
