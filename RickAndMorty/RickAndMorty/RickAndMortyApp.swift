@@ -8,7 +8,6 @@
 import SwiftUI
 import SwiftData
 
-@main
 struct RickAndMortyApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([

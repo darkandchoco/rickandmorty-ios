@@ -3,7 +3,7 @@ import Combine
 import UIKit
 import SwiftUI
 
-final class CharactersCoordinator {
+public final class CharactersCoordinator {
     private let navigationController: UINavigationController
     private var cancellables = Set<AnyCancellable>()
     
@@ -27,6 +27,7 @@ final class CharactersCoordinator {
     private func setupBindings() {
         $state
             .receive(on: DispatchQueue.main)
+            .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 self?.handleState()
             })
