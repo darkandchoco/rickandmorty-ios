@@ -2,6 +2,7 @@ import UIKit
 import CommonUI
 import Foundation
 import RestNetworking
+import RealmSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -11,7 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     internal func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
+        migrateRealm()
         window = UIWindow(windowScene: windowScene)
         
         window?.rootViewController = navigationController
@@ -23,6 +24,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                                       cacheClient: cacheClient)
         window?.makeKeyAndVisible()
         charactersCoordinator?.start()
+    }
+    
+    private func migrateRealm() {
+        // Define your Realm configuration
+        let config = Realm.Configuration(
+            schemaVersion: 2, // Increment this each time you make a change to the schema
+            migrationBlock: { migration, oldSchemaVersion in
+                if oldSchemaVersion < 2 {
+                    // Handle migrations for versions before 2 (where new properties were added)
+                    migration.enumerateObjects(ofType: RealmCharacter.className()) { oldObject, newObject in
+                        // You can provide default values for new properties if needed
+                        newObject?["origin"] = "" // Set a default value for the new property 'origin'
+                        newObject?["location"] = "" // Set a default value for the new property 'location'
+                        newObject?["image"] = "" // Set a default value for the new property 'image'
+                    }
+                }
+            }
+        )
+
+        // Set the new configuration as the default configuration for Realm
+        Realm.Configuration.defaultConfiguration = config
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

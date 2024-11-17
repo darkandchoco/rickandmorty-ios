@@ -61,6 +61,7 @@ public final class CharactersCoordinator {
         let vm = CharactersMainViewModelImplementation(charactersService: charactersService)
         vm.delegate = self
         let vc = UIHostingController(rootView: CharactersMainView(viewModel: vm))
+        vc.title = "RickAndMorty"
         navigationController.pushViewController(vc, animated: true)
     }
     
