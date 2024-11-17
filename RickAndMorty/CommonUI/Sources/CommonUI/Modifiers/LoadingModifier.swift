@@ -1,10 +1,3 @@
-//
-//  LoadingModifier.swift
-//  CommonUI
-//
-//  Created by Richmond and Loren on 2024-11-17.
-//
-
 import SwiftUI
 
 struct LoadingModifier: ViewModifier {

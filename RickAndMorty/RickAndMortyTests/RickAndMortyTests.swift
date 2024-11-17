@@ -1,10 +1,3 @@
-//
-//  RickAndMortyTests.swift
-//  RickAndMortyTests
-//
-//  Created by Richmond and Loren on 2024-11-17.
-//
-
 import Testing
 
 struct RickAndMortyTests {
