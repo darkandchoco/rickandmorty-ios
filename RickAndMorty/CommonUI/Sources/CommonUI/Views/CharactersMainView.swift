@@ -1,6 +1,5 @@
 import SwiftUI
 import CommonCore
-
 struct CharactersMainView<ViewModel>: View where ViewModel: CharactersMainViewModel {
     @ObservedObject var viewModel: ViewModel
     
@@ -9,8 +8,14 @@ struct CharactersMainView<ViewModel>: View where ViewModel: CharactersMainViewMo
             if let errorMessage = viewModel.errorMessage {
                 InfoView(message: errorMessage, isError: true)
             }
+            
+            // Search Bar
+            TextField("Search characters", text: $viewModel.searchText)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.horizontal)
+            
             List {
-                ForEach(viewModel.characters) { character in
+                ForEach(viewModel.filteredCharacters) { character in
                     CharacterRowView(character: character, didTapRow: { character in
                         viewModel.didTapRow(character: character)
                     })

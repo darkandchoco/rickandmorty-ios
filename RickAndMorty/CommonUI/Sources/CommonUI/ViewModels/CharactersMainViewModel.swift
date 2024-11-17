@@ -5,11 +5,13 @@ import Combine
 protocol CharactersMainViewModelDelegate: AnyObject {
     func charactersMainViewDidTapRow(character: Character)
 }
-
 protocol CharactersMainViewModel: ObservableObject {
     var characters: [Character] { get }
-    var isLoading: Bool { get set }
+    var filteredCharacters: [Character] { get }
     var errorMessage: String? { get }
+    var isLoading: Bool { get set }
+    var searchText: String { get set }
+    
     func didTapRow(character: Character)
     func refreshData()
 }
@@ -17,9 +19,18 @@ protocol CharactersMainViewModel: ObservableObject {
 final class CharactersMainViewModelImplementation: CharactersMainViewModel {
     private let charactersService: CharactersService
     private var cancellables = Set<AnyCancellable>()
+    @Published var searchText: String = ""
     @Published var characters: [Character] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
+    
+    var filteredCharacters: [Character] {
+        if searchText.isEmpty {
+            return characters
+        } else {
+            return characters.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        }
+    }
     
     weak var delegate: CharactersMainViewModelDelegate?
     
@@ -57,6 +68,13 @@ final class CharactersMainViewModelImplementation: CharactersMainViewModel {
 }
 
 final class CharactersMainViewModelMock: CharactersMainViewModel {
+    var searchText: String = ""
+    
+    var filteredCharacters: [Character] = [
+        Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender", origin: "Earth", location: "Earth", image: "something"),
+        Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender", origin: "Earth", location: "Earth", image: "something"),
+        Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender", origin: "Earth", location: "Earth", image: "something")
+    ]
     var characters: [Character] = [
         Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender", origin: "Earth", location: "Earth", image: "something"),
         Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender", origin: "Earth", location: "Earth", image: "something"),
