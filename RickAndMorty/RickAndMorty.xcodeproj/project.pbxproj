@@ -16,6 +16,7 @@
 		7A5B0DC72CE7C499008588F0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A5B0DC62CE7C499008588F0 /* Preview Assets.xcassets */; };
 		7A5B0DCF2CE7C7D3008588F0 /* CommonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7A5B0DCE2CE7C7D3008588F0 /* CommonUI */; };
 		7ABD1A6C2CE7DED70023F074 /* NetworkingClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABD1A6B2CE7DED70023F074 /* NetworkingClientMock.swift */; };
+		D74C279E2CEA41B100ECD86C /* RestNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = D74C279D2CEA41B100ECD86C /* RestNetworking */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D74C279E2CEA41B100ECD86C /* RestNetworking in Frameworks */,
 				7A5B0DCF2CE7C7D3008588F0 /* CommonUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -109,6 +111,7 @@
 			name = RickAndMorty;
 			packageProductDependencies = (
 				7A5B0DCE2CE7C7D3008588F0 /* CommonUI */,
+				D74C279D2CEA41B100ECD86C /* RestNetworking */,
 			);
 			productName = RickAndMorty;
 			productReference = 7A5B0DBA2CE7C498008588F0 /* RickAndMorty.app */;
@@ -140,6 +143,7 @@
 			mainGroup = 7A5B0DB12CE7C498008588F0;
 			packageReferences = (
 				7A5B0DCD2CE7C7D3008588F0 /* XCLocalSwiftPackageReference "CommonUI" */,
+				D74C279C2CEA41B100ECD86C /* XCLocalSwiftPackageReference "RestNetworking" */,
 			);
 			productRefGroup = 7A5B0DBB2CE7C498008588F0 /* Products */;
 			projectDirPath = "";
@@ -306,7 +310,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RickAndMorty/Preview Content\"";
-				DEVELOPMENT_TEAM = VZX2D2K2NJ;
+				DEVELOPMENT_TEAM = J2S73V253D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RickAndMorty/Info.plist;
@@ -319,7 +323,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.something.RickAndMorty;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ricmond.RickAndMorty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -335,7 +339,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RickAndMorty/Preview Content\"";
-				DEVELOPMENT_TEAM = VZX2D2K2NJ;
+				DEVELOPMENT_TEAM = J2S73V253D;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RickAndMorty/Info.plist;
@@ -348,7 +352,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.something.RickAndMorty;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ricmond.RickAndMorty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -384,12 +388,20 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = CommonUI;
 		};
+		D74C279C2CEA41B100ECD86C /* XCLocalSwiftPackageReference "RestNetworking" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = RestNetworking;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		7A5B0DCE2CE7C7D3008588F0 /* CommonUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CommonUI;
+		};
+		D74C279D2CEA41B100ECD86C /* RestNetworking */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RestNetworking;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

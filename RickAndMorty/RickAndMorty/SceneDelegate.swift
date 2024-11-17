@@ -1,6 +1,7 @@
 import UIKit
 import CommonUI
 import Foundation
+import RestNetworking
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -14,8 +15,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         window?.rootViewController = navigationController
+        
+        let networkingClient = AlamofireClient(retryLimit: 3)
         charactersCoordinator = CharactersCoordinator(navigationController: self.navigationController,
-                                                      networkingClient: NetworkingClientMock())
+                                                      networkingClient: networkingClient)
         window?.makeKeyAndVisible()
         charactersCoordinator?.start()
     }
