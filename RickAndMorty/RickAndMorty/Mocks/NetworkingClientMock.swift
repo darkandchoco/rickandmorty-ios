@@ -1,10 +1,3 @@
-//
-//  NetworkingClientMock.swift
-//  RickAndMorty
-//
-//  Created by Richmond Ko on 2024-11-15.
-//
-
 import Foundation
 import CommonCore
 import Combine

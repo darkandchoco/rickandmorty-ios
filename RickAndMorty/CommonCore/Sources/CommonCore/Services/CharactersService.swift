@@ -38,6 +38,10 @@ public final class RemoteCharactersService: CharactersService {
                 // Return updated characters from cache
                 return self?.cacheService.getCharacters() ?? []
             }
+            .catch { error -> AnyPublisher<[Character], any Error> in
+                // If the network call fails, propagate the error
+                return Fail(error: error).eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
         
         // Combine both publishers: return cached first, then update

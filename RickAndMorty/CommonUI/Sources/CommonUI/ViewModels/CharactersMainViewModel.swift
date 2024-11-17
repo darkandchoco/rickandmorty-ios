@@ -5,19 +5,32 @@ import Combine
 protocol CharactersMainViewModelDelegate: AnyObject {
     func charactersMainViewDidTapRow(character: Character)
 }
-
 protocol CharactersMainViewModel: ObservableObject {
     var characters: [Character] { get }
+    var filteredCharacters: [Character] { get }
+    var errorMessage: String? { get }
     var isLoading: Bool { get set }
+    var searchText: String { get set }
     
     func didTapRow(character: Character)
+    func refreshData()
 }
 
 final class CharactersMainViewModelImplementation: CharactersMainViewModel {
     private let charactersService: CharactersService
     private var cancellables = Set<AnyCancellable>()
+    @Published var searchText: String = ""
     @Published var characters: [Character] = []
     @Published var isLoading: Bool = false
+    @Published var errorMessage: String?
+    
+    var filteredCharacters: [Character] {
+        if searchText.isEmpty {
+            return characters
+        } else {
+            return characters.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        }
+    }
     
     weak var delegate: CharactersMainViewModelDelegate?
     
@@ -26,7 +39,7 @@ final class CharactersMainViewModelImplementation: CharactersMainViewModel {
         self.getCharacters()
     }
     
-    private func getCharacters() {
+    internal func getCharacters() {
         isLoading = true
         charactersService.getCharacters()
             .receive(on: DispatchQueue.main)
@@ -35,7 +48,7 @@ final class CharactersMainViewModelImplementation: CharactersMainViewModel {
                 case .finished: break
                 case .failure(let failure):
                     self?.isLoading = false
-                    print(failure)
+                    self?.errorMessage = failure.localizedDescription
                 }
             }, receiveValue: { [weak self] characters in
                 self?.isLoading = false
@@ -47,17 +60,34 @@ final class CharactersMainViewModelImplementation: CharactersMainViewModel {
     func didTapRow(character: Character) {
         delegate?.charactersMainViewDidTapRow(character: character)
     }
+    
+    func refreshData() {
+        self.errorMessage = nil
+        getCharacters()
+    }
 }
 
 final class CharactersMainViewModelMock: CharactersMainViewModel {
+    var searchText: String = ""
+    
+    var filteredCharacters: [Character] = [
+        Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender", origin: "Earth", location: "Earth", image: "something"),
+        Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender", origin: "Earth", location: "Earth", image: "something"),
+        Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender", origin: "Earth", location: "Earth", image: "something")
+    ]
     var characters: [Character] = [
         Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender", origin: "Earth", location: "Earth", image: "something"),
         Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender", origin: "Earth", location: "Earth", image: "something"),
         Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender", origin: "Earth", location: "Earth", image: "something")
     ]
     var isLoading: Bool = false
+    var errorMessage: String? = "Test error"
     
     func didTapRow(character: Character) {
+        
+    }
+    
+    func refreshData() {
         
     }
 }

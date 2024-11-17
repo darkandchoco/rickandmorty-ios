@@ -1,9 +1,3 @@
-//
-//  CharactersResponse.swift
-//  RestNetworking
-//
-//  Created by Richmond and Loren on 2024-11-17.
-//
 import CommonCore
 
 struct CharactersResponse: Codable {
