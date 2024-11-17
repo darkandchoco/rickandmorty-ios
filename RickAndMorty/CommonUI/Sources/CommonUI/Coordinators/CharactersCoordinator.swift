@@ -19,7 +19,7 @@ public final class CharactersCoordinator {
     enum State {
         case idle
         case mainView
-        case detailView
+        case detailView(character: Character)
     }
     
     public init(navigationController: UINavigationController,
@@ -50,8 +50,8 @@ public final class CharactersCoordinator {
         case .idle: break
         case .mainView:
             pushMainView()
-        case .detailView:
-            pushDetailView()
+        case .detailView(let character):
+            pushDetailView(character: character)
         }
     }
     
@@ -59,11 +59,20 @@ public final class CharactersCoordinator {
         let charactersService = RemoteCharactersService(client: networkingClient,
                                                         cacheService: cacheClient)
         let vm = CharactersMainViewModelImplementation(charactersService: charactersService)
+        vm.delegate = self
         let vc = UIHostingController(rootView: CharactersMainView(viewModel: vm))
         navigationController.pushViewController(vc, animated: true)
     }
     
-    private func pushDetailView() {
-        
+    private func pushDetailView(character: Character) {
+        let vm = CharacterDetailViewModelImplementation(character: character)
+        let vc = UIHostingController(rootView: CharacterDetailView(viewModel: vm))
+        navigationController.pushViewController(vc, animated: true)
+    }
+}
+
+extension CharactersCoordinator: CharactersMainViewModelDelegate {
+    func charactersMainViewDidTapRow(character: Character) {
+        state = .detailView(character: character)
     }
 }

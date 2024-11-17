@@ -13,11 +13,14 @@ struct CharactersResponse: Codable {
     func toDomainModel() -> [CommonCore.Character] {
         return results.map({
             return CommonCore.Character(id: $0.id,
-                             name: $0.name,
-                             status: $0.status,
-                             species: $0.species,
-                             type: $0.type,
-                             gender: $0.gender)
+                                        name: $0.name,
+                                        status: $0.status,
+                                        species: $0.species,
+                                        type: $0.type,
+                                        gender: $0.gender,
+                                        origin: $0.origin.name,
+                                        location: $0.location.name,
+                                        image: $0.image)
         })
     }
 }

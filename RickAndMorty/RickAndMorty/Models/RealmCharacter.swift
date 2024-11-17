@@ -10,6 +10,9 @@ class RealmCharacter: Object, Identifiable {
     @objc dynamic var species: String = ""
     @objc dynamic var type: String = ""
     @objc dynamic var gender: String = ""
+    @objc dynamic var origin: String = ""
+    @objc dynamic var location: String = ""
+    @objc dynamic var image: String = ""
     
     // Primary key for Realm (optional but recommended for performance)
     override static func primaryKey() -> String? {
@@ -17,7 +20,7 @@ class RealmCharacter: Object, Identifiable {
     }
     
     // Optional initializer if you want to use it in the same way as the struct
-    convenience init(id: Int, name: String, status: String, species: String, type: String, gender: String) {
+    convenience init(id: Int, name: String, status: String, species: String, type: String, gender: String, origin: String, location: String, image: String) {
         self.init()
         self.id = id
         self.name = name
@@ -25,6 +28,9 @@ class RealmCharacter: Object, Identifiable {
         self.species = species
         self.type = type
         self.gender = gender
+        self.origin = origin
+        self.location = location
+        self.image = image
     }
     
     convenience init(character: CommonCore.Character) {
@@ -35,5 +41,8 @@ class RealmCharacter: Object, Identifiable {
         self.species = character.species
         self.type = character.type
         self.gender = character.gender
+        self.origin = character.origin
+        self.location = character.location
+        self.image = character.image
     }
 }

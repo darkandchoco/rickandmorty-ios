@@ -2,9 +2,15 @@ import Foundation
 import CommonCore
 import Combine
 
+protocol CharactersMainViewModelDelegate: AnyObject {
+    func charactersMainViewDidTapRow(character: Character)
+}
+
 protocol CharactersMainViewModel: ObservableObject {
     var characters: [Character] { get }
     var isLoading: Bool { get set }
+    
+    func didTapRow(character: Character)
 }
 
 final class CharactersMainViewModelImplementation: CharactersMainViewModel {
@@ -12,6 +18,8 @@ final class CharactersMainViewModelImplementation: CharactersMainViewModel {
     private var cancellables = Set<AnyCancellable>()
     @Published var characters: [Character] = []
     @Published var isLoading: Bool = false
+    
+    weak var delegate: CharactersMainViewModelDelegate?
     
     init(charactersService: CharactersService) {
         self.charactersService = charactersService
@@ -35,13 +43,21 @@ final class CharactersMainViewModelImplementation: CharactersMainViewModel {
             })
             .store(in: &cancellables)
     }
+    
+    func didTapRow(character: Character) {
+        delegate?.charactersMainViewDidTapRow(character: character)
+    }
 }
 
 final class CharactersMainViewModelMock: CharactersMainViewModel {
     var characters: [Character] = [
-        Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender"),
-        Character(id: 2, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender"),
-        Character(id: 3, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender")
+        Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender", origin: "Earth", location: "Earth", image: "something"),
+        Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender", origin: "Earth", location: "Earth", image: "something"),
+        Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender", origin: "Earth", location: "Earth", image: "something")
     ]
-    var isLoading: Bool = true
+    var isLoading: Bool = false
+    
+    func didTapRow(character: Character) {
+        
+    }
 }

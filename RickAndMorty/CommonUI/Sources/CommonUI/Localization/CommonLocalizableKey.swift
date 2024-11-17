@@ -3,6 +3,12 @@ import Foundation
 
 public enum CommonLocalizableKey: String, LocalizableKey {
     case status_label
+    case gender_label
+    case name_label
+    case origin_label
+    case species_label
+    case type_label
+    case location_label
     
     var tableName: String {
         "Common"

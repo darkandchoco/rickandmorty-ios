@@ -7,7 +7,9 @@ struct CharactersMainView<ViewModel>: View where ViewModel: CharactersMainViewMo
     var body: some View {
         List {
             ForEach(viewModel.characters) { character in
-                CharacterRowView(character: character)
+                CharacterRowView(character: character, didTapRow: { character in
+                    viewModel.didTapRow(character: character)
+                })
             }
         }
         .listStyle(.plain)
