@@ -26,7 +26,7 @@ final class CharactersMainViewModelImplementation: CharactersMainViewModel {
         self.getCharacters()
     }
     
-    private func getCharacters() {
+    internal func getCharacters() {
         isLoading = true
         charactersService.getCharacters()
             .receive(on: DispatchQueue.main)
