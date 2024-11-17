@@ -5,14 +5,22 @@ struct CharactersMainView<ViewModel>: View where ViewModel: CharactersMainViewMo
     @ObservedObject var viewModel: ViewModel
     
     var body: some View {
-        List {
-            ForEach(viewModel.characters) { character in
-                CharacterRowView(character: character, didTapRow: { character in
-                    viewModel.didTapRow(character: character)
-                })
+        VStack {
+            if let errorMessage = viewModel.errorMessage {
+                InfoView(message: errorMessage, isError: true)
+            }
+            List {
+                ForEach(viewModel.characters) { character in
+                    CharacterRowView(character: character, didTapRow: { character in
+                        viewModel.didTapRow(character: character)
+                    })
+                }
+            }
+            .listStyle(.plain)
+            .refreshable {
+                viewModel.refreshData()
             }
         }
-        .listStyle(.plain)
         .loading(isLoading: $viewModel.isLoading)
     }
 }

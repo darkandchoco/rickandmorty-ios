@@ -9,8 +9,9 @@ protocol CharactersMainViewModelDelegate: AnyObject {
 protocol CharactersMainViewModel: ObservableObject {
     var characters: [Character] { get }
     var isLoading: Bool { get set }
-    
+    var errorMessage: String? { get }
     func didTapRow(character: Character)
+    func refreshData()
 }
 
 final class CharactersMainViewModelImplementation: CharactersMainViewModel {
@@ -18,6 +19,7 @@ final class CharactersMainViewModelImplementation: CharactersMainViewModel {
     private var cancellables = Set<AnyCancellable>()
     @Published var characters: [Character] = []
     @Published var isLoading: Bool = false
+    @Published var errorMessage: String?
     
     weak var delegate: CharactersMainViewModelDelegate?
     
@@ -35,7 +37,7 @@ final class CharactersMainViewModelImplementation: CharactersMainViewModel {
                 case .finished: break
                 case .failure(let failure):
                     self?.isLoading = false
-                    print(failure)
+                    self?.errorMessage = failure.localizedDescription
                 }
             }, receiveValue: { [weak self] characters in
                 self?.isLoading = false
@@ -47,6 +49,11 @@ final class CharactersMainViewModelImplementation: CharactersMainViewModel {
     func didTapRow(character: Character) {
         delegate?.charactersMainViewDidTapRow(character: character)
     }
+    
+    func refreshData() {
+        self.errorMessage = nil
+        getCharacters()
+    }
 }
 
 final class CharactersMainViewModelMock: CharactersMainViewModel {
@@ -56,8 +63,13 @@ final class CharactersMainViewModelMock: CharactersMainViewModel {
         Character(id: 1, name: "Rick", status: "Alive", species: "some specie", type: "some type", gender: "some gender", origin: "Earth", location: "Earth", image: "something")
     ]
     var isLoading: Bool = false
+    var errorMessage: String? = "Test error"
     
     func didTapRow(character: Character) {
+        
+    }
+    
+    func refreshData() {
         
     }
 }

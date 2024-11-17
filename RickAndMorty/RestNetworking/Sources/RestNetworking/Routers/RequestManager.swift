@@ -6,7 +6,9 @@ struct RequestManager: RequestInterceptor {
     let retrylimit: Int
     
     public init(retryLimit: Int) {
-        session = Session()
+        let configuration = URLSessionConfiguration.default
+        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+        session = Session(configuration: configuration)
         self.retrylimit = retryLimit
     }
     
@@ -70,10 +72,22 @@ struct RequestManager: RequestInterceptor {
     
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         guard request.retryCount < self.retrylimit else {
+            // If we've hit the retry limit, don't retry anymore
+            print("Retry limit reached. Not retrying.")
             completion(.doNotRetry)
             return
         }
-        print("\nretried; retry count: \(request.retryCount)\n")
+        
+        print("\nRetrying request. Retry count: \(request.retryCount)\n")
+        
+        // Check for specific error conditions, like timeouts, and decide to retry
+        if let urlError = error as? URLError, urlError.code == .timedOut {
+            // Retry with delay for timeout error
+            completion(.retryWithDelay(2.0)) // Retry after 2 seconds delay
+        } else {
+            // If the error is not a timeout, decide whether or not to retry
+            completion(.doNotRetry) // Or use .retry if you want to retry for other errors
+        }
     }
 }
 
