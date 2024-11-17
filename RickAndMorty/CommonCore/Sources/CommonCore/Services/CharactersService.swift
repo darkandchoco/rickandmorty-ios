@@ -21,13 +21,35 @@ public final class RemoteCharactersService: CharactersService {
     }
     
     public func getCharacters() -> AnyPublisher<[Character], any Error> {
-        return client.getCharacters()
-            .map { characters in
-                // Save fetched characters to Realm
-                self.cacheService.saveCharacters(characters)
-                return self.cacheService.getCharacters()
+        // Get cached characters first
+        let cachedCharacters = cacheService.getCharacters()
+        
+        // Return cached characters immediately (if any)
+        let cachedPublisher: AnyPublisher<[Character], any Error> = Just(cachedCharacters)
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+        
+        // Fetch fresh characters from client and update the cache
+        let fetchAndUpdatePublisher: AnyPublisher<[Character], any Error> = client.getCharacters()
+            .handleEvents(receiveOutput: { [weak self] characters in
+                // Save the updated characters to cache
+                self?.cacheService.saveCharacters(characters)
+            })
+            .map { [weak self] _ in
+                // Return updated characters from cache
+                return self?.cacheService.getCharacters() ?? []
             }
             .eraseToAnyPublisher()
+        
+        // Combine both publishers: return cached first, then update
+        if !cachedCharacters.isEmpty {
+            return cachedPublisher
+                .append(fetchAndUpdatePublisher)
+                .eraseToAnyPublisher()
+        } else {
+            // No cache available, fetch from client directly
+            return fetchAndUpdatePublisher
+        }
     }
 }
 
