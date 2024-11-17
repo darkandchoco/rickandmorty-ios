@@ -52,7 +52,9 @@ public final class CharactersCoordinator {
     }
     
     private func pushMainView() {
-        let charactersService = RemoteCharactersService(client: networkingClient)
+        let cacheService = CharactersCacheServiceImplementation()
+        let charactersService = RemoteCharactersService(client: networkingClient,
+                                                        cacheService: cacheService)
         let vm = CharactersMainViewModelImplementation(charactersService: charactersService)
         let vc = UIHostingController(rootView: CharactersMainView(viewModel: vm))
         navigationController.pushViewController(vc, animated: true)
