@@ -17,8 +17,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = navigationController
         
         let networkingClient = AlamofireClient(retryLimit: 3)
+        let cacheClient = CharactersCacheServiceImplementation()
         charactersCoordinator = CharactersCoordinator(navigationController: self.navigationController,
-                                                      networkingClient: networkingClient)
+                                                      networkingClient: networkingClient,
+                                                      cacheClient: cacheClient)
         window?.makeKeyAndVisible()
         charactersCoordinator?.start()
     }

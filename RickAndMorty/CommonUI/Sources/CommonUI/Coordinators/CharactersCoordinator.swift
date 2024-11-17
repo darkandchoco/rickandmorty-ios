@@ -5,10 +5,12 @@ import SwiftUI
 import CommonCore
 
 public typealias NetworkingClient = CharactersClient
+public typealias CacheClient = CharactersCacheService
 
 public final class CharactersCoordinator {
     private let navigationController: UINavigationController
     private let networkingClient: NetworkingClient
+    private let cacheClient: CacheClient
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -21,9 +23,11 @@ public final class CharactersCoordinator {
     }
     
     public init(navigationController: UINavigationController,
-                networkingClient: NetworkingClient) {
+                networkingClient: NetworkingClient,
+                cacheClient: CacheClient) {
         self.navigationController = navigationController
         self.networkingClient = networkingClient
+        self.cacheClient = cacheClient
         self.setupBindings()
     }
     
@@ -52,9 +56,8 @@ public final class CharactersCoordinator {
     }
     
     private func pushMainView() {
-        let cacheService = CharactersCacheServiceImplementation()
         let charactersService = RemoteCharactersService(client: networkingClient,
-                                                        cacheService: cacheService)
+                                                        cacheService: cacheClient)
         let vm = CharactersMainViewModelImplementation(charactersService: charactersService)
         let vc = UIHostingController(rootView: CharactersMainView(viewModel: vm))
         navigationController.pushViewController(vc, animated: true)

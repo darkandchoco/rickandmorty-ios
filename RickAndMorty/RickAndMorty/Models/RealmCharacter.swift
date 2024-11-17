@@ -1,5 +1,6 @@
 import Foundation
 import RealmSwift
+import CommonCore
 
 // Define the Realm Object (data model)
 class RealmCharacter: Object, Identifiable {
@@ -26,7 +27,7 @@ class RealmCharacter: Object, Identifiable {
         self.gender = gender
     }
     
-    convenience init(character: Character) {
+    convenience init(character: CommonCore.Character) {
         self.init()
         self.id = character.id
         self.name = character.name

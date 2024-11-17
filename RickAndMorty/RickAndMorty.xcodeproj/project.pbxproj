@@ -13,6 +13,9 @@
 		7A5B0DC72CE7C499008588F0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A5B0DC62CE7C499008588F0 /* Preview Assets.xcassets */; };
 		7A5B0DCF2CE7C7D3008588F0 /* CommonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7A5B0DCE2CE7C7D3008588F0 /* CommonUI */; };
 		7ABD1A6C2CE7DED70023F074 /* NetworkingClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABD1A6B2CE7DED70023F074 /* NetworkingClientMock.swift */; };
+		D730CDE12CEA6A9E00F35BA4 /* RealmCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730CDE02CEA6A9E00F35BA4 /* RealmCharacter.swift */; };
+		D730CDE42CEA6AF400F35BA4 /* CharactersCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730CDE32CEA6AF400F35BA4 /* CharactersCacheService.swift */; };
+		D730CDF42CEA77B100F35BA4 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D730CDF32CEA77B100F35BA4 /* RealmSwift */; };
 		D74C279E2CEA41B100ECD86C /* RestNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = D74C279D2CEA41B100ECD86C /* RestNetworking */; };
 		D7A3AD482CEA4E4A0071989F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7A3AD472CEA4E4A0071989F /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -25,6 +28,8 @@
 		7A5B0DC32CE7C499008588F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7A5B0DC62CE7C499008588F0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7ABD1A6B2CE7DED70023F074 /* NetworkingClientMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingClientMock.swift; sourceTree = "<group>"; };
+		D730CDE02CEA6A9E00F35BA4 /* RealmCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCharacter.swift; sourceTree = "<group>"; };
+		D730CDE32CEA6AF400F35BA4 /* CharactersCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersCacheService.swift; sourceTree = "<group>"; };
 		D7A3AD472CEA4E4A0071989F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -33,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D730CDF42CEA77B100F35BA4 /* RealmSwift in Frameworks */,
 				D74C279E2CEA41B100ECD86C /* RestNetworking in Frameworks */,
 				7A5B0DCF2CE7C7D3008588F0 /* CommonUI in Frameworks */,
 			);
@@ -60,6 +66,8 @@
 		7A5B0DBC2CE7C498008588F0 /* RickAndMorty */ = {
 			isa = PBXGroup;
 			children = (
+				D730CDE22CEA6AD900F35BA4 /* Services */,
+				D730CDDF2CEA6A9200F35BA4 /* Models */,
 				7ABD1A6A2CE7DEB90023F074 /* Mocks */,
 				7A48507B2CE7D6280067AB61 /* Info.plist */,
 				7A5B0DC32CE7C499008588F0 /* Assets.xcassets */,
@@ -87,6 +95,22 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		D730CDDF2CEA6A9200F35BA4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D730CDE02CEA6A9E00F35BA4 /* RealmCharacter.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D730CDE22CEA6AD900F35BA4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D730CDE32CEA6AF400F35BA4 /* CharactersCacheService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -106,6 +130,7 @@
 			packageProductDependencies = (
 				7A5B0DCE2CE7C7D3008588F0 /* CommonUI */,
 				D74C279D2CEA41B100ECD86C /* RestNetworking */,
+				D730CDF32CEA77B100F35BA4 /* RealmSwift */,
 			);
 			productName = RickAndMorty;
 			productReference = 7A5B0DBA2CE7C498008588F0 /* RickAndMorty.app */;
@@ -138,6 +163,7 @@
 			packageReferences = (
 				7A5B0DCD2CE7C7D3008588F0 /* XCLocalSwiftPackageReference "CommonUI" */,
 				D74C279C2CEA41B100ECD86C /* XCLocalSwiftPackageReference "RestNetworking" */,
+				D730CDF22CEA77B100F35BA4 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 7A5B0DBB2CE7C498008588F0 /* Products */;
 			projectDirPath = "";
@@ -167,8 +193,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A48507D2CE7D6800067AB61 /* AppDelegate.swift in Sources */,
+				D730CDE12CEA6A9E00F35BA4 /* RealmCharacter.swift in Sources */,
 				7ABD1A6C2CE7DED70023F074 /* NetworkingClientMock.swift in Sources */,
 				7A48507A2CE7D4B60067AB61 /* SceneDelegate.swift in Sources */,
+				D730CDE42CEA6AF400F35BA4 /* CharactersCacheService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,10 +414,26 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		D730CDF22CEA77B100F35BA4 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		7A5B0DCE2CE7C7D3008588F0 /* CommonUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CommonUI;
+		};
+		D730CDF32CEA77B100F35BA4 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D730CDF22CEA77B100F35BA4 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		D74C279D2CEA41B100ECD86C /* RestNetworking */ = {
 			isa = XCSwiftPackageProductDependency;
