@@ -11,6 +11,7 @@ struct CharactersMainView<ViewModel>: View where ViewModel: CharactersMainViewMo
             }
         }
         .listStyle(.plain)
+        .loading(isLoading: $viewModel.isLoading)
     }
 }
 
