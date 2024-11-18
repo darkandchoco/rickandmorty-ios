@@ -22,7 +22,7 @@ struct CharactersResponse: Codable {
 struct Info: Codable {
     let count, pages: Int
     let next: String
-    let prev: Int?
+    let prev: String?
 }
 
 struct Character: Codable {

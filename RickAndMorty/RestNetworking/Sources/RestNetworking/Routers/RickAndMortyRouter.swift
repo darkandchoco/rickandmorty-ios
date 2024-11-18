@@ -2,7 +2,7 @@ import Foundation
 import Alamofire
 
 enum RickAndMortyRouter: URLRequestConvertible {
-    case getCharacters
+    case getCharacters(page: Int?)
     
     private var baseURLString: String {
         return "https://rickandmortyapi.com/api"
@@ -28,9 +28,10 @@ enum RickAndMortyRouter: URLRequestConvertible {
         urlRequest.httpMethod = method.rawValue
         
         switch self {
-        case .getCharacters: break
-//        case .updateUserProfileEmail(let requestData):
-//            urlRequest = try JSONEncoding.default.encode(urlRequest, with: requestData.generateDictionary())
+        case .getCharacters(let page):
+            if let page = page {
+                urlRequest = try URLEncoding.default.encode(urlRequest, with: ["page": page])
+            }
         }
         return urlRequest
     }

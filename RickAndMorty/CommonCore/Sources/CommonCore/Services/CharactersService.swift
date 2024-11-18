@@ -6,7 +6,7 @@ public protocol CharactersService: AnyObject {
 }
 
 public protocol CharactersClient: AnyObject {
-    func getCharacters() -> AnyPublisher<[Character], Error>
+    func getCharacters(page: Int?) -> AnyPublisher<[Character], Error>
 }
 
 public final class RemoteCharactersService: CharactersService {
@@ -20,39 +20,36 @@ public final class RemoteCharactersService: CharactersService {
     }
     
     public func getCharacters() -> AnyPublisher<[Character], any Error> {
-        // Get cached characters first
         let cachedCharacters = cacheService.getCharacters()
         
-        // Return cached characters immediately (if any)
         let cachedPublisher: AnyPublisher<[Character], any Error> = Just(cachedCharacters)
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
         
-        // Fetch fresh characters from client and update the cache
-        let fetchAndUpdatePublisher: AnyPublisher<[Character], any Error> = client.getCharacters()
+        let fetchAllPagesPublisher: AnyPublisher<[Character], any Error> = fetchPages(1...10)
             .handleEvents(receiveOutput: { [weak self] characters in
-                // Save the updated characters to cache
                 self?.cacheService.saveCharacters(characters)
             })
-            .map { [weak self] _ in
-                // Return updated characters from cache
-                return self?.cacheService.getCharacters() ?? []
-            }
-            .catch { error -> AnyPublisher<[Character], any Error> in
-                // If the network call fails, propagate the error
-                return Fail(error: error).eraseToAnyPublisher()
-            }
             .eraseToAnyPublisher()
         
-        // Combine both publishers: return cached first, then update
         if !cachedCharacters.isEmpty {
             return cachedPublisher
-                .append(fetchAndUpdatePublisher)
+                .append(fetchAllPagesPublisher)
                 .eraseToAnyPublisher()
         } else {
-            // No cache available, fetch from client directly
-            return fetchAndUpdatePublisher
+            return fetchAllPagesPublisher
         }
+    }
+    
+    private func fetchPages(_ range: ClosedRange<Int>) -> AnyPublisher<[Character], any Error> {
+        let publishers = range.map { page in
+            client.getCharacters(page: page)
+        }
+        
+        return Publishers.MergeMany(publishers)
+            .collect()
+            .map { $0.flatMap { $0 } } // Flatten arrays from each page
+            .eraseToAnyPublisher()
     }
 }
 

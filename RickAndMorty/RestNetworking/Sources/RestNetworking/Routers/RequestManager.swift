@@ -8,7 +8,8 @@ struct RequestManager: RequestInterceptor {
     public init(retryLimit: Int) {
         let configuration = URLSessionConfiguration.default
         configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
-        session = Session(configuration: configuration)
+        let networkLogger = NetworkLogger()
+        session = Session(configuration: configuration, eventMonitors: [networkLogger])
         self.retrylimit = retryLimit
     }
     

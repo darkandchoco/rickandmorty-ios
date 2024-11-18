@@ -52,7 +52,7 @@ final class CharactersMainViewModelImplementation: CharactersMainViewModel {
                 }
             }, receiveValue: { [weak self] characters in
                 self?.isLoading = false
-                self?.characters = characters
+                self?.characters = characters.sorted(by: { $0.name < $1.name })
             })
             .store(in: &cancellables)
     }
