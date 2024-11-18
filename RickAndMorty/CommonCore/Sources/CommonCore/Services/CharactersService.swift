@@ -26,7 +26,7 @@ public final class RemoteCharactersService: CharactersService {
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
         
-        let fetchAllPagesPublisher: AnyPublisher<[Character], any Error> = fetchPages(1...10)
+        let fetchAllPagesPublisher: AnyPublisher<[Character], any Error> = fetchPages(1...20)
             .handleEvents(receiveOutput: { [weak self] characters in
                 self?.cacheService.saveCharacters(characters)
             })
